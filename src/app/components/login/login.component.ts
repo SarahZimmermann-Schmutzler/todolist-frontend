@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -9,30 +10,16 @@ export class LoginComponent {
   username = '';
   password = '';
 
-  constructor() { }
+  constructor(private authservice: AuthService) { }
+  // hier Service verknüpfen
 
   ngOnInit(): void { }
 
   async login() {
-    const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-
-    const raw = JSON.stringify({
-      "username": this.username,
-      "password": this.password
-    });
-
-    const requestOptions: RequestInit = {
-      method: 'POST',
-      headers: myHeaders,
-      body: raw,
-      redirect: 'follow'
-    };
-
     try{
-      let resp = await fetch("http://127.0.0.1:8000/login/", requestOptions);
-      let json = await resp.json();
-      localStorage.setItem('Token', json.token)
+      let resp = await this.authservice.loginWithUserAndPassword(this.username, this.password);
+      console.log(resp)
+      
     } catch(e) {
       console.error(e);
     }
