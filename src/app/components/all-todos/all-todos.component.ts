@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { lastValueFrom } from 'rxjs';
@@ -20,9 +20,7 @@ export class AllTodosComponent implements OnInit {
 
   loadTodos() {
     const url = environment.baseURL + '/todos/';
-    let headers = new HttpHeaders();
-    headers = headers.set('Authorization', 'Token ' + localStorage.getItem('Token'));
-    return lastValueFrom(this.http.get(url, {headers: headers}));
+    return lastValueFrom(this.http.get(url));
     // lastValueFrom wandelt es in Promise um
   }
 }
