@@ -16,7 +16,7 @@ export class AuthInterceptorService implements HttpInterceptor {
     // token wird abgerufen, entweder aus dem this.authService.getAuthToken() oder wie wir aus dem LS
     if (token) {
       // gibt es Token, wird es dem header angehängt
-      let request = req.clone({
+      req = req.clone({
         setHeaders: {Authorization: `Token ${token}`}
       });
     }
@@ -30,9 +30,8 @@ export class AuthInterceptorService implements HttpInterceptor {
             // wenn kein Token, dann zurück zum Login
           }
         }
-        return throwError(() => err)
+        return throwError(() => err);
         // gibt error auch aus
-      })
-    );
+      }));
   }
 }
